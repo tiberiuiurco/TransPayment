@@ -1,0 +1,285 @@
+body {
+  background: linear-gradient(
+    132deg,
+    rgb(251, 251, 255) 0%,
+    rgb(215, 223, 252) 100%
+  );
+  /* background: #1c6076; */
+}
+
+.company_missing {
+  /* margin-left of 40px, bold text and red color */
+  margin-left: 40px;
+  font-weight: bold;
+  color: red;
+}
+.company_found {
+  /* margin-left of 40px, bold text and red color */
+  margin-left: 40px;
+  font-weight: bold;
+  color: green;
+}
+
+.register_company {
+  margin-top: 20px;
+  margin-left: 40px;
+}
+
+.company-name {
+  color: green;
+}
+
+.user-name {
+  color: red;
+}
+
+.header-page {
+  /* Include a div for the title and a button in the same line */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 20px 0px 40px;
+}
+
+.welcome_message {
+  /* Create styling for the beginning of page of the title "Welcome, User!" */
+  font-family: monospace;
+  border-bottom: 2px solid;
+  border-color: #113f67;
+  color: #113f67;
+  font-size: 40px;
+  margin-top: -45px;
+  /* margin-left: 40px; */
+  width: 15.2%;
+  margin-bottom: 20px;
+  min-width: 290px;
+  font-weight: bold;
+}
+
+.header-button {
+  font-size: 40px;
+  margin-top: -45px;
+  margin-left: 40px;
+  width: 15.2%;
+  margin-bottom: 20px;
+}
+
+.title-button {
+  background-color: #38598b !important;
+  color: white !important;
+}
+
+.title-button:hover {
+  background-color: #113f67 !important;
+}
+
+.resources-table {
+  /* margin-top: 40px; */
+  /* margin-left: 40px; */
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 20%;
+}
+
+.resources-table td,
+.resources-table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+/* .resources-table tr:nth-child(even) { */
+/*   background-color: #f2f2f2; */
+/* } */
+/*  */
+.resources-table tr:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  cursor: default;
+}
+
+.resources-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  /* background-color: #24252a; */
+  background-color: #a2a8d3;
+  color: white;
+}
+
+.graphs-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.graph {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  /* border: 1px solid black; */
+  border-radius: 40px;
+  align-items: center;
+  /* flex-grow: 1; */
+  box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+  /* background-color: #ecf6f9; */
+  /* background-color: rgba(255, 255, 255, 0.55); */
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.top {
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+  /* background: lightblue; */
+  position: relative;
+}
+
+.top-title {
+  text-align: center;
+  color: #113f67;
+}
+
+.top-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.top > h1 {
+  position: center;
+}
+
+.title-select {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.select-block-title {
+  margin-top: -20px;
+  margin-right: 20px;
+}
+
+::ng-deep .selector.mat-select-content {
+  width: 2000px;
+  background-color: red;
+  font-size: 10px;
+}
+
+a ::ng-deep .mat-mdc-text-field-wrapper {
+  border: 3px solid black;
+  border-radius: 15px !important;
+  text-align: center;
+  width: 100px !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+::ng-deep .selector.mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+.body-page {
+  /* This contains a flex row. Make the flex row be in the middle. */
+  /* margin-top: 60px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+  /* height: calc(100% - 250px); */
+}
+
+.vat-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.vat-numbers {
+  /* border: 1px solid #a2a8d3; */
+  border-radius: 10px;
+  width: 400px;
+  height: 150px;
+  /* background: rgba(242, 242, 242, 0.3); */
+  padding: 0 15px;
+  /* background: rgba(0, 0, 0, 0.05); */
+  box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+}
+
+.vat-title {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+
+.vat-grid-cell-title {
+  text-align: center;
+  font-weight: 700;
+}
+
+.vat-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 20px;
+}
+
+.vat-grid-cell {
+  /* background: rgba(242, 242, 242, 0.4); */
+  border-radius: 20px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.vat-number {
+  text-align: right;
+}
+
+.vat-curr-month {
+  display: flex;
+  justify-content: space-between;
+}
+
+.received {
+  color: green;
+}
+
+.sent {
+  color: red;
+}
+
+.deduced {
+  color: rgb(100, 149, 237);
+  margin-top: 5px;
+}
+
+.total-line {
+  border-bottom: 2px dotted blue;
+  padding-bottom: 5px;
+}
+
+.special {
+  position: absolute;
+  top: 18px;
+  right: -4.25em;
+  background-color: purple;
+  color: white;
+  font-size: 15px;
+  text-align: center;
+  rotate: 30deg;
+  padding: 5px 6rem;
+  border: 1px solid white;
+}
+
+.special-year {
+  position: absolute;
+  top: 18px;
+  right: -3.25em;
+  background-color: purple;
+  color: white;
+  font-size: 15px;
+  text-align: center;
+  rotate: 30deg;
+  padding: 5px 6rem;
+  border: 1px solid white;
+}

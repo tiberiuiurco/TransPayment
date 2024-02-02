@@ -1,0 +1,42 @@
+.modal-content {
+  overflow: hidden;
+}
+
+.error {
+  font-size: 14px;
+  font-weight: bold;
+  color: red;
+}
+
+.form_field {
+  min-width: 150px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.half_field {
+  min-width: 150px;
+  max-width: 500px;
+  width: 50%;
+}
+.half_field1 {
+  min-width: 150px;
+  max-width: 500px;
+  width: 50%;
+}
+.half_field2 {
+  min-width: 150px;
+  max-width: 500px;
+  width: 48%;
+}
+
+.dialog_card {
+  border: 2px solid #e0e0e0;
+  border-radius: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.space_half {
+  margin-right: 10px;
+}

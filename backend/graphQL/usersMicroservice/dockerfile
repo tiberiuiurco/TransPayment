@@ -1,0 +1,13 @@
+FROM node:12
+RUN mkdir -p /users-microservice/
+WORKDIR /users-microservice
+COPY graphQL/usersMicroservice/package*.json /users-microservice/
+RUN npm install
+COPY graphQL/usersMicroservice/ /users-microservice/graphQL/usersMicroservice
+COPY db/ /users-microservice/db
+COPY models/ /users-microservice/models
+
+ARG PORT
+EXPOSE ${PORT}
+
+CMD ["npm", "run", "start-users"]

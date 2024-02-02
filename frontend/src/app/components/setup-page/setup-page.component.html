@@ -1,0 +1,261 @@
+<div class="header-row">
+  <div class="header-page">
+    <div class="welcome_message">Setup</div>
+    <div class="header-button" *ngIf="user_company" (click)="onAdd()">
+      <button mat-raised-button class="title-button">Adauga</button>
+    </div>
+  </div>
+
+  <div class="chip-row" *ngIf="canBeDone && !isLoading">
+    <mat-chip-listbox style="margin-left: 40px" aria-label="Fish selection">
+      <mat-chip-option selected (click)="switchClients('companies')"
+        >Clienti</mat-chip-option
+      >
+      <mat-chip-option (click)="switchEmployees()" *ngIf="localStorage.getItem('role') == '2'">Angajati</mat-chip-option>
+      <!-- <mat-chip-option class="current-year">Anul Curent</mat-chip-option> -->
+      <!-- <mat-chip-option color="warn">Warn fish</mat-chip-option> -->
+    </mat-chip-listbox>
+    <mat-chip-listbox
+      style="margin-left: 40px"
+      aria-label="Fish selection"
+      *ngIf="viewType == 'Clients'"
+    >
+      <mat-chip-option
+        selected
+        color="warn"
+        *ngIf="viewType == 'Clients'"
+        (click)="switchClients('companies')"
+        >Companii</mat-chip-option
+      >
+      <mat-chip-option
+        color="warn"
+        *ngIf="viewType == 'Clients'"
+        (click)="switchClients('people')"
+        >Persoane Fizice</mat-chip-option
+      >
+    </mat-chip-listbox>
+  </div>
+</div>
+
+<mat-spinner
+  style="margin-left: 40px; margin-top: 40px"
+  *ngIf="isLoading"
+></mat-spinner>
+
+<!-- Table for Clients -->
+
+<!-- Companies -->
+<div
+  *ngIf="
+    viewType == 'Clients' &&
+    clientsType == 'companies' &&
+    canBeDone &&
+    !isLoading &&
+    clients.length > 0
+  "
+  class="table-view"
+>
+  <table class="resources-table">
+    <tr>
+      <th class="w15">ID</th>
+      <th class="w200">Nume</th>
+      <th class="w200">Email</th>
+      <th class="w200">Telefon</th>
+      <th class="w500">Adresa</th>
+      <th class="w100">Actiuni</th>
+    </tr>
+    <tr *ngFor="let client of clients">
+      <td class="colored_cells w15">{{ client.id }}</td>
+      <td class="colored_cells w200">{{ client.name }}</td>
+      <td class="colored_cells w200">{{ client.email }}</td>
+      <td class="colored_cells w200">{{ client.phone }}</td>
+      <td class="colored_cells w500">{{ client.address }}</td>
+      <td class="table-cell-center">
+        <mat-icon [inline]="true" class="icon filters" (click)="onEdit(client)"
+          >edit</mat-icon
+        >
+      </td>
+    </tr>
+  </table>
+  <mat-paginator
+    class="paginator"
+    [length]="paginator.count"
+    [pageSize]="17"
+    (page)="receivePage($event, 'companies')"
+    [pageIndex]="paginator.pageIndex"
+  >
+  </mat-paginator>
+</div>
+
+<div
+  *ngIf="clients.length == 0 && viewType == 'Clients'"
+  class="company_missing space-top"
+>
+  Nu a fost gasit niciun client.
+</div>
+
+<div
+  *ngIf="employees.length == 0 && viewType == 'Employees'"
+  class="company_missing space-top"
+>
+  Nu a fost gasit niciun angajat.
+</div>
+
+<!-- People -->
+<div
+  *ngIf="
+    viewType == 'Clients' &&
+    clientsType == 'people' &&
+    canBeDone &&
+    !isLoading &&
+    clients.length > 0
+  "
+  class="table-view"
+>
+  <table class="resources-table">
+    <tr>
+      <th class="w15">ID</th>
+      <th class="w200">Nume</th>
+      <th class="w200">Telefon</th>
+      <th class="w500">Adresa</th>
+      <th class="w100">Actiuni</th>
+    </tr>
+    <tr *ngFor="let client of clients">
+      <td class="colored_cells w15">{{ client.id }}</td>
+      <td class="colored_cells w200">{{ client.name }}</td>
+      <td class="colored_cells w200">{{ client.phone }}</td>
+      <td class="colored_cells w500">{{ client.address }}</td>
+      <td class="table-cell-center">
+        <mat-icon [inline]="true" class="icon filters" (click)="onEdit(client)"
+          >edit</mat-icon
+        >
+      </td>
+    </tr>
+  </table>
+  <mat-paginator
+    class="paginator"
+    [length]="paginator.count"
+    [pageSize]="17"
+    (page)="receivePage($event, 'people')"
+    [pageIndex]="paginator.pageIndex"
+  >
+  </mat-paginator>
+</div>
+
+<!-- Table for Employees -->
+
+<div
+  *ngIf="viewType == 'Employees' && employees.length > 0 && false"
+  class="table-view"
+>
+  <table class="resources-table">
+    <tr>
+      <th class="w15">ID</th>
+      <th class="w200">Nume</th>
+      <th>Telefon</th>
+      <th>Actiuni</th>
+    </tr>
+    <tr *ngFor="let employee of employees">
+      <td class="colored_cells w15">{{ employee.id }}</td>
+      <td class="colored_cells w200">
+        <div>
+          <mat-icon
+            style="margin-right: 5px"
+            [inline]="true"
+            *ngIf="!employee.isDriver"
+            >perm_identity</mat-icon
+          >
+          <mat-icon
+            style="margin-right: 5px"
+            [inline]="true"
+            *ngIf="employee.isDriver"
+            >directions_bus</mat-icon
+          >{{ employee.name }}
+        </div>
+      </td>
+      <td class="colored_cells">{{ employee.phone }}</td>
+      <td class="table-cell-center">
+        <mat-icon
+          [inline]="true"
+          class="icon filters"
+          (click)="onEdit(employee)"
+          >edit</mat-icon
+        >
+      </td>
+      <!-- <td class="table-cell-center"> -->
+      <!-- 	<mat-icon [inline]="true" class="icon filters" (click)="manage_payment(false, payment)">edit</mat-icon> -->
+      <!-- 	<mat-icon [inline]="true" class="icon filters" (click)="mark_paid(payment)" *ngIf="!payment.paid" -->
+      <!-- 		matTooltip="Please use dot (.) for decimals separation.">check_circle</mat-icon> -->
+      <!-- </td> -->
+    </tr>
+  </table>
+  <mat-paginator
+    class="paginator"
+    [length]="paginator.count"
+    [pageSize]="17"
+    (page)="receivePage($event, 'default')"
+    [pageIndex]="paginator.pageIndex"
+  >
+  </mat-paginator>
+</div>
+
+<div class="employees-grid" *ngIf="viewType == 'Employees'">
+  <div
+    *ngFor="let employee of employees"
+    class="card"
+    (click)="onEdit(employee)"
+  >
+    <img
+      *ngIf="employee.isDriver"
+      src="img_avatar.png"
+      alt="Avatar"
+      style="width: 100%"
+    />
+    <img
+      *ngIf="!employee.isDriver"
+      src="img_avatar2.png"
+      alt="Avatar"
+      style="width: 100%"
+    />
+    <div class="container">
+      <div
+        style="text-align: center; margin-bottom: 5px"
+        [ngClass]="{
+          emitor: !employee.isDriver,
+          driver: employee.isDriver
+        }"
+      >
+        <b>{{ employee.name }}</b>
+      </div>
+      <p style="text-align: center; margin-bottom: 5px">{{ employee.phone }}</p>
+      <hr style="margin-bottom: 5px" />
+      <div style="text-align: center; margin-bottom: 10px">
+        <mat-icon
+          style="margin-right: 5px"
+          [inline]="true"
+          *ngIf="!employee.isDriver"
+          >perm_identity</mat-icon
+        >
+        <mat-icon
+          style="margin-right: 5px"
+          [inline]="true"
+          *ngIf="employee.isDriver"
+          >directions_bus</mat-icon
+        >{{ employee.isDriver ? " Sofer" : "Emitator" }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  [ngClass]="{
+    company_found: user_company,
+    company_missing: !user_company
+  }"
+>
+  {{
+    user_company
+      ? ""
+      : "Nu am gasit nicio companie inregistrata in contul dumneavoastra"
+  }}
+</div>

@@ -1,0 +1,406 @@
+<!-- Add style that aligns the title in the middle. -->
+<h1 mat-dialog-title align="center">
+  {{ isAdd ? "Adauga o Intrare:" : "Modifica Intrarea:" }}
+</h1>
+<div class="dialog_card">
+  <div mat-dialog-content class="modal-content">
+    <div *ngIf="loaded">
+      <mat-grid-list cols="2" rowHeight="60px">
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+          <div class="align-left">
+            <div
+              [ngClass]="{
+                info_name_invalid: receipt_date.invalid,
+                info_name: !receipt_date.invalid
+              }"
+            >
+              Data Factura * :
+            </div>
+          </div>
+          <mat-form-field class="datepicker">
+            <input
+              matInput
+              [matDatepicker]="pickerReceipt"
+              [formControl]="receipt_date"
+              (dateChange)="onInputChange('receipt_date', $event)"
+              style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              "
+              required
+            />
+            <mat-datepicker-toggle matSuffix [for]="pickerReceipt">
+            </mat-datepicker-toggle>
+            <mat-datepicker #pickerReceipt> </mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+          <div class="align-left">
+            <div
+              [ngClass]="{
+                info_name_invalid: receipt_date.invalid,
+                info_name: !receipt_date.invalid
+              }"
+            >
+              Data Incasare * :
+            </div>
+          </div>
+          <mat-form-field class="datepicker">
+            <input
+              matInput
+              [matDatepicker]="pickerPayment"
+              [formControl]="payment_date"
+              (dateChange)="onInputChange('payment_date', $event)"
+              style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              "
+              required
+            />
+            <mat-datepicker-toggle matSuffix [for]="pickerPayment">
+            </mat-datepicker-toggle>
+            <mat-datepicker #pickerPayment> </mat-datepicker>
+            <!-- <mat-error *ngIf="receipt_date.invalid" style="height: 30px"> -->
+            <!--     Start Date is mandatory -->
+            <!-- </mat-error> -->
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <mat-grid-list cols="2" rowHeight="60px">
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+          <div class="align-left">
+            <div
+              [ngClass]="{
+                info_name_invalid: receipt_date.invalid,
+                info_name: !receipt_date.invalid
+              }"
+            >
+              Client * :
+            </div>
+          </div>
+          <mat-form-field>
+            <mat-select
+              [(ngModel)]="current_payment['partner']"
+              style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              "
+              (ngModelChange)="onInputChange('jobvite_category', $event)"
+              #jobvite_category="ngModel"
+              required
+            >
+              <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="search"
+                  [placeholderLabel]="'Search'"
+                  [noEntriesFoundLabel]="'No value found'"
+                  (ngModelChange)="onSearch('partners', $event)"
+                >
+                </ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let partner of partners" [value]="partner">
+                <span>{{ partner?.name }}</span>
+              </mat-option>
+            </mat-select>
+            <mat-error [hidden]="jobvite_category.valid">
+              Introducerea clientului este obligatorie
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+          <div class="align-left">
+            <div
+              [ngClass]="{
+                info_name_invalid: receipt_date.invalid,
+                info_name: !receipt_date.invalid
+              }"
+            >
+              Tip de Plata * :
+            </div>
+          </div>
+          <mat-form-field>
+            <mat-select
+              [(ngModel)]="current_payment['payment_type']"
+              style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              "
+              (ngModelChange)="onInputChange('payment_type', $event)"
+              #jobvite_category="ngModel"
+              required
+            >
+              <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="search"
+                  [placeholderLabel]="'Search'"
+                  [noEntriesFoundLabel]="'No value found'"
+                  (ngModelChange)="onSearch('payment_type', $event)"
+                >
+                </ngx-mat-select-search>
+              </mat-option>
+              <mat-option
+                *ngFor="let payment_type of payment_types"
+                [value]="payment_type"
+              >
+                <span>{{ payment_type?.name }}</span>
+              </mat-option>
+            </mat-select>
+            <mat-error [hidden]="jobvite_category.valid">
+              Introducerea tipului de plata este obligatorie
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-grid-list cols="2" rowHeight="60px">
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+          <div class="align-left">
+            <div
+              [ngClass]="{
+                info_name_invalid: receipt_date.invalid,
+                info_name: !receipt_date.invalid
+              }"
+            >
+              Emis de * :
+            </div>
+          </div>
+          <mat-form-field>
+            <mat-select
+              [(ngModel)]="current_payment['emitor']"
+              style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              "
+              (ngModelChange)="onInputChange('emitor', $event)"
+              #jobvite_category="ngModel"
+              required
+            >
+              <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="search"
+                  [placeholderLabel]="'Search'"
+                  [noEntriesFoundLabel]="'No value found'"
+                  (ngModelChange)="onSearch('emitor', $event)"
+                >
+                </ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let emitor of emitors" [value]="emitor">
+                <span>{{ emitor?.name }}</span>
+              </mat-option>
+            </mat-select>
+            <mat-error [hidden]="jobvite_category.valid">
+              Introducerea emitorului este obligatorie
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+          <div class="align-left">
+            <div class="info_name">Delegatul * :</div>
+          </div>
+          <mat-form-field>
+            <mat-select
+              [(ngModel)]="current_payment['delegate']"
+              style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              "
+              (ngModelChange)="onInputChange('delegate', $event)"
+              #jobvite_category="ngModel"
+              required
+            >
+              <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="search"
+                  [placeholderLabel]="'Search'"
+                  [noEntriesFoundLabel]="'No value found'"
+                  (ngModelChange)="onSearch('delegate', $event)"
+                >
+                </ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let delegate of delegates" [value]="delegate">
+                <span>{{ delegate?.name }}</span>
+              </mat-option>
+            </mat-select>
+            <mat-error [hidden]="current_payment['delegate']">
+              Introducerea delegatului este obligatorie
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-grid-list cols="3" rowHeight="60px">
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+          <div class="info_name">Cantitate * :</div>
+          <mat-form-field style="width: 100px">
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="current_payment['amount']"
+              (ngModelChange)="onInputChange('amount', $event)"
+              style="text-align: center"
+              #amount="ngModel"
+              required
+              style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              "
+            />
+            <mat-error [hidden]="amount.valid">
+              Cantitatea este obligatorie
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+          <div class="info_name">Pret Unitar * :</div>
+          <mat-form-field style="width: 120px">
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="current_payment['price_unit']"
+              (ngModelChange)="onInputChange('price_unit', $event)"
+              style="text-align: center"
+              #price_unit="ngModel"
+              required
+              style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              "
+            />
+            <mat-error [hidden]="price_unit.valid">
+              Pretul unitar este obligatoriu
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+          <div>
+            <span class="checkbox-container">
+              <b>Tva * :</b>
+              <mat-checkbox
+                [checked]="current_payment['isVat']"
+                (change)="tickVat()"
+                color="blue"
+              >
+              </mat-checkbox>
+            </span>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-grid-list
+        cols="1"
+        rowHeight="60px"
+        *ngIf="!current_payment['total']"
+      >
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-grid-list cols="3" rowHeight="60px" *ngIf="current_payment['total']">
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+          <div class="info_name" style="color: green">
+            Valoare: {{ current_payment["price_for_amount"] }}
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+          <div
+            class="info_name"
+            style="color: red"
+            *ngIf="current_payment['vat_value'] != 0"
+          >
+            TVA: {{ current_payment["vat_value"] }}
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+          <div class="info_name" style="color: blue">
+            Total: {{ current_payment["total"] }}
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-grid-list cols="2" rowHeight="60px">
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+          <div class="info_name">Observatii :</div>
+          <mat-form-field style="width: 100%">
+            <input
+              matInput
+              [(ngModel)]="current_payment['comment']"
+              (ngModelChange)="onInputChange('comment', $event)"
+              style="text-align: center"
+              #comment="ngModel"
+              required
+              style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              "
+            />
+            <mat-error [hidden]="amount.valid">
+              Cantitatea este obligatorie
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+          <div class="info_name">Nr. de inmatriculare*:</div>
+          <mat-form-field>
+            <mat-select
+              [(ngModel)]="current_payment['car_plate']"
+              style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              "
+              (ngModelChange)="onInputChange('car_plate', $event)"
+              #car_plate="ngModel"
+              required
+            >
+              <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="search"
+                  [placeholderLabel]="'Search'"
+                  [noEntriesFoundLabel]="'No value found'"
+                  (ngModelChange)="onSearch('car_plate', $event)"
+                >
+                </ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let element of flota" [value]="element.car_plate">
+                <span>{{element.car_plate}}</span>
+              </mat-option>
+            </mat-select>
+            <mat-error [hidden]="current_payment['car_plate']">
+              Introducerea numarul de inmatriculare este obligatorie
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-grid-list cols="3" rowHeight="60px">
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="center">
+  <button mat-button (click)="onNoClick()">Renunta</button>
+  <button
+    mat-button
+    cdkFocusInitial
+    style="float: right"
+    (click)="isAdd ? registerResource() : updateInputPayment()"
+  >
+    {{ isAdd ? "Adauga" : "Modifica" }}
+  </button>
+</div>

@@ -1,0 +1,108 @@
+<!-- <div class="formm">
+    <form [formGroup]="registerForm">
+
+        <mat-form-field appearance="fill">
+            <mat-label>Nume de familie</mat-label>
+            <input matInput
+                name="last_name"
+                placeholder="Popescu"
+                formControlName="last_name">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Prenume</mat-label>
+            <input matInput
+                name="first_name"
+                placeholder="Diana"
+                formControlName="first_name">
+        </mat-form-field>
+        <div>
+
+        <mat-form-field appearance="fill">
+            <mat-label>CNP</mat-label>
+            <input matInput
+                name="cnp"
+                placeholder="6230301016502"
+                formControlName="cnp">
+        </mat-form-field>
+        </div>
+        
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput
+                    name="email"
+                    placeholder="example@elite.com"
+                    formControlName="email">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Nume de utilizator</mat-label>
+                <input matInput
+                    name="username"
+                    placeholder="dianap102"
+                    formControlName="username">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Parola</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" name="password" formControlName="password">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </mat-form-field>
+        </div>
+
+        <div class="registerButton">
+            <button mat-raised-button color="primary"
+            id="registerBtn"
+            (click)="register()"
+            >Register</button>
+        </div>
+    </form>
+
+</div> -->
+
+<div class="page">
+  <div class="modal">
+    <form method="post" (ngSubmit)="submit()">
+      <div class="inputBox">
+        <input
+          type="text"
+          name="last_name"
+          id="last_name"
+          required="required"
+        />
+        <span>Nume de Familie</span>
+      </div>
+      <div class="inputBox">
+        <input
+          type="text"
+          name="first_name"
+          id="first_name"
+          required="required"
+        />
+        <span>Prenume</span>
+      </div>
+      <div class="inputBox">
+        <input type="text" name="cnp" id="cnp" required="required" />
+        <span>CNP</span>
+      </div>
+      <div class="inputBox">
+        <input type="email" name="email" id="em" required="required" />
+        <span>Email</span>
+      </div>
+      <div class="inputBox">
+        <input type="text" name="username" id="username" required="required" />
+        <span>Nume de utilizator</span>
+      </div>
+      <div class="inputBox">
+        <input type="password" name="password" id="pass" required="required" />
+        <span>Parola</span>
+      </div>
+      <input type="submit" value="Inregistrare" id="but" />
+      <a href="/login">Aveti deja cont? Click pentru a va loga!</a>
+    </form>
+  </div>
+</div>

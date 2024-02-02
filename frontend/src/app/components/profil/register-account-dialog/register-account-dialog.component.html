@@ -1,0 +1,140 @@
+<!-- Add style that aligns the title in the middle. -->
+<h1 mat-dialog-title align="center">
+  {{ isAdd ? "Inregistreaza-ti compania" : "Modifica-ti compania:" }}
+</h1>
+<div class="dialog_card">
+  <div mat-dialog-content class="modal-content">
+    <div *ngIf="loaded">
+      <form [formGroup]="registerForm">
+        <div>
+          <mat-form-field class="form_field">
+            <mat-label>Nume</mat-label>
+            <input
+              class="register_name"
+              matInput
+              name="name"
+              placeholder="S.C. Companie S.R.L."
+              formControlName="name"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="half_field1 space_half" *ngIf="isAdd">
+            <mat-label>CUI</mat-label>
+            <input
+              matInput
+              name="cui"
+              placeholder="RO12345678"
+              formControlName="cui"
+            />
+          </mat-form-field>
+          <mat-form-field class="half_field2" *ngIf="isAdd">
+            <mat-label>RC</mat-label>
+            <input
+              matInput
+              name="rc"
+              placeholder="J99/99/2099"
+              formControlName="rc"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="form_field">
+            <mat-label>Adresa</mat-label>
+            <input
+              matInput
+              name="address"
+              placeholder="Bucuresti Str. Agafiei Nr. 3 Bl. 3 Sc. 1 Ap. 2"
+              formControlName="address"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="form_field">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              name="email"
+              placeholder="contact@companie.ro"
+              formControlName="email"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="form_field">
+            <mat-label>Telefon</mat-label>
+            <input
+              matInput
+              name="phone"
+              placeholder="0701234567"
+              formControlName="phone"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="form_field">
+            <mat-label>IBAN</mat-label>
+            <input
+              matInput
+              name="iban"
+              placeholder="RO12 XXXX 0000 0000 0000 0000"
+              formControlName="iban"
+            />
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field class="half_field1 space_half">
+            <mat-label>Serie Factura</mat-label>
+            <input
+              matInput
+              name="serie_factura"
+              placeholder="AB"
+              formControlName="serie_factura"
+            />
+          </mat-form-field>
+          <mat-form-field class="half_field2">
+            <mat-label>Nr Factura</mat-label>
+            <input
+              matInput
+              name="nr_factura"
+              placeholder="1745"
+              formControlName="nr_factura"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="half_field1 space_half">
+            <mat-label>Serie Chitanta</mat-label>
+            <input
+              matInput
+              name="serie_chitanta"
+              placeholder="AB"
+              formControlName="serie_chitanta"
+            />
+          </mat-form-field>
+          <mat-form-field class="half_field2">
+            <mat-label>Nr Chitanta</mat-label>
+            <input
+              matInput
+              name="nr_chitanta"
+              placeholder="231"
+              formControlName="nr_chitanta"
+            />
+          </mat-form-field>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="center">
+  <button mat-button (click)="onNoClick()">Renunta</button>
+  <button
+    mat-button
+    cdkFocusInitial
+    style="float: right"
+    (click)="isAdd ? registerCompany() : editCompany()"
+  >
+    {{ isAdd ? "Inregistreaza" : "Modifica" }}
+  </button>
+</div>

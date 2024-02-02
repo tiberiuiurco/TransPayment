@@ -1,0 +1,130 @@
+<!-- Add style that aligns the title in the middle. -->
+<h1 mat-dialog-title align="center">
+  {{
+    isAdd
+      ? "Adauga un angajat:"
+      : "Modifica angajatul " + current_resource.name + ":"
+  }}
+</h1>
+<div class="dialog_card">
+  <div mat-dialog-content class="modal-content">
+    <div *ngIf="loaded">
+      <form [formGroup]="registerForm">
+        <div>
+          <mat-form-field class="form_field">
+            <mat-label>Nume</mat-label>
+            <input
+              class="register_name"
+              matInput
+              name="name"
+              placeholder="Popescu Mihai"
+              formControlName="name"
+            />
+          </mat-form-field>
+        </div>
+        <div *ngIf="isAdd">
+          <mat-form-field class="form_field">
+            <mat-label>CNP</mat-label>
+            <input
+              matInput
+              name="cnp"
+              placeholder="6230316018302"
+              formControlName="cnp"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="half_field1 space_half">
+            <mat-label>Serie</mat-label>
+            <input
+              matInput
+              name="id_series"
+              placeholder="TC"
+              formControlName="id_series"
+            />
+          </mat-form-field>
+          <mat-form-field class="half_field2">
+            <mat-label>Numar</mat-label>
+            <input
+              matInput
+              name="id_number"
+              placeholder="133995"
+              formControlName="id_number"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="form_field">
+            <mat-label>Adresa</mat-label>
+            <input
+              matInput
+              name="address"
+              placeholder="Bucuresti"
+              formControlName="address"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="form_field">
+            <mat-label>Telefon</mat-label>
+            <input
+              matInput
+              name="phone"
+              placeholder="0701234567"
+              formControlName="phone"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="one-liner" *ngIf="isAdd">
+          <mat-form-field class="half_field1 space_half">
+            <input
+              matInput
+              [matDatepicker]="picker"
+              placeholder="Data Angajarii"
+              [value]="registerForm.value.employment_date"
+              (dateChange)="addDateEvent($event)"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="half_field2">
+            <mat-label>Numar contract</mat-label>
+            <input
+              matInput
+              name="contract_number"
+              placeholder="1745"
+              formControlName="contract_number"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <span class="checkbox-container">
+            <b>Este sofer?</b>
+            <mat-checkbox
+              [checked]="registerForm.value.isDriver"
+              (change)="
+                registerForm.value.isDriver = !registerForm.value.isDriver
+              "
+            >
+            </mat-checkbox>
+          </span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="center">
+  <button mat-button (click)="onNoClick()">Renunta</button>
+  <button
+    mat-button
+    cdkFocusInitial
+    style="float: right"
+    (click)="isAdd ? registerResource() : editResource()"
+  >
+    {{ isAdd ? "Adauga" : "Modifica" }}
+  </button>
+</div>

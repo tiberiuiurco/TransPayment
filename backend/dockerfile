@@ -1,0 +1,15 @@
+FROM node:12
+RUN mkdir -p /app-gateway/
+WORKDIR /app-gateway
+COPY package*.json /app-gateway/
+RUN npm install
+COPY . /app-gateway/
+COPY wait-for-it.sh /app-gateway/
+COPY docker-entrypoint.sh /app-gateway/
+
+RUN chmod +x ./wait-for-it.sh ./docker-entrypoint.sh
+
+ARG PORT
+EXPOSE ${PORT}
+ENTRYPOINT ["./docker-entrypoint.sh"]
+CMD ["npm", "run", "start-gateway"]

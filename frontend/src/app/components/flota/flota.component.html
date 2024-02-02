@@ -1,0 +1,58 @@
+<div class="header-row">
+<div class="header-page">
+  <div class="welcome_message">Flota</div>
+  <div class="header-button" *ngIf="user_company" (click)="onAdd()">
+    <button mat-raised-button class="title-button">Adauga</button>
+  </div>
+</div>
+
+</div>
+
+<mat-spinner
+  style="margin-left: 40px; margin-top: 40px"
+  *ngIf="isLoading"
+></mat-spinner>
+
+
+<div
+  *ngIf="flota.length == 0"
+  class="company_missing space-top"
+>
+  Nu a fost gasit niciun vehicul.
+</div>
+
+<!-- Table for Employees -->
+
+<div class="employees-grid" *ngIf="flota.length > 0">
+  <div *ngFor="let element of flota" class="card" (click)="onEdit(element)">
+    <img *ngIf="element.tip == 'Carosat'" src="cargo-van1.png" alt="Avatar" style="width:100%"/>
+    <img *ngIf="element.tip == 'Prelata'" src="prelata.png" alt="Avatar" style="width:100%; height: 185.3px;"/>
+    <img *ngIf="element.tip == 'TIR'" src="tir.png" alt="Avatar" style="width:100%; height: 185.3px;"/>
+    <!-- <img *ngIf="!employee.isDriver" src="img_avatar2.png" alt="Avatar" style="width:100%"/> -->
+    <div class="container">
+      <div style="text-align:center; margin-bottom: 5px"><b>{{element.car_plate}}</b></div>
+      <p style="text-align:center; margin-bottom: 5px"><a style="color: red">{{element.payments_number}}</a> comenzi</p>
+      <hr style="margin-bottom: 5px">
+      <div style="text-align: center; margin-bottom:10px; display: flex; justify-content: center;">
+        <mat-icon
+          style="margin-right: 5px"
+          [inline]="true"
+          >directions_bus</mat-icon
+        >
+        {{element.tip}}</div>
+    </div>
+  </div>
+</div>
+
+<div
+  [ngClass]="{
+    company_found: user_company,
+    company_missing: !user_company
+  }"
+>
+  {{
+    user_company
+      ? ""
+      : "Nu am gasit nicio companie inregistrata in contul dumneavoastra"
+  }}
+</div>

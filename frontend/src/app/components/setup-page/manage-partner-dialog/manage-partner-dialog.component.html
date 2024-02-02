@@ -1,0 +1,275 @@
+<!-- Add style that aligns the title in the middle. -->
+<h1 mat-dialog-title align="center">
+	{{ isAdd ? "Adauga un client:" : "Modifica clientul:" }}
+</h1>
+<div class="dialog_card">
+	<div mat-dialog-content class="modal-content">
+		<div *ngIf="loaded && client_type == 'companies'">
+			<mat-grid-list cols="1" rowHeight="60px">
+				<mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+					<div class="info_name one-line">Nume * :</div>
+					<mat-form-field style="width: 100%">
+						<input matInput [(ngModel)]="current_client['name']" (ngModelChange)="onInputChange('name', $event)"
+							style="text-align: center" #name="ngModel" required style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              " />
+						<mat-error [hidden]="name.valid">
+							Cantitatea este obligatorie
+						</mat-error>
+					</mat-form-field>
+				</mat-grid-tile>
+			</mat-grid-list>
+			<mat-grid-list cols="2" rowHeight="60px">
+				<mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+					<div class="info_name">CUI * :</div>
+					<mat-form-field style="width: 100%">
+						<input matInput [(ngModel)]="current_client['cui']" (ngModelChange)="onInputChange('cui', $event)"
+							style="text-align: center" #cui="ngModel" required style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              " />
+						<mat-error [hidden]="cui.valid">
+							CUI-ul este obligatoriu
+						</mat-error>
+					</mat-form-field>
+				</mat-grid-tile>
+				<mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+					<div class="info_name">RC * :</div>
+					<mat-form-field style="width: 100%">
+						<input matInput [(ngModel)]="current_client['rc']" (ngModelChange)="onInputChange('rc', $event)"
+							style="text-align: center" #rc="ngModel" required style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              " />
+						<mat-error [hidden]="rc.valid"> RC-ul este obligatoriu </mat-error>
+					</mat-form-field>
+				</mat-grid-tile>
+			</mat-grid-list>
+			<mat-grid-list cols="1" rowHeight="60px">
+				<mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+					<div class="info_name one-line">Adresa * :</div>
+					<mat-form-field style="width: 100%">
+						<input matInput [(ngModel)]="current_client['address']" (ngModelChange)="onInputChange('address', $event)"
+							style="text-align: center" #address="ngModel" required style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              " />
+						<mat-error [hidden]="address.valid">
+							Cantitatea este obligatorie
+						</mat-error>
+					</mat-form-field>
+				</mat-grid-tile>
+			</mat-grid-list>
+			<mat-grid-list cols="1" rowHeight="60px">
+				<mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+					<div class="info_name one-line">Adresa Secundara :</div>
+					<mat-form-field style="width: 100%">
+						<input matInput [(ngModel)]="current_client['address_secondary']"
+							(ngModelChange)="onInputChange('address_secondary', $event)" style="text-align: center"
+							#address_secondary="ngModel" required style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              " />
+					</mat-form-field>
+				</mat-grid-tile>
+			</mat-grid-list>
+			<mat-grid-list cols="2" rowHeight="60px">
+				<mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+					<div class="info_name">Email :</div>
+					<mat-form-field style="width: 100%">
+						<input matInput [(ngModel)]="current_client['email']" (ngModelChange)="onInputChange('email', $event)"
+							style="text-align: center" #email="ngModel" required style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              " />
+					</mat-form-field>
+				</mat-grid-tile>
+				<mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+					<div class="info_name">Telefon :</div>
+					<mat-form-field style="width: 100%">
+						<input matInput [(ngModel)]="current_client['phone']" (ngModelChange)="onInputChange('phone', $event)"
+							style="text-align: center" #phone="ngModel" required style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              " />
+					</mat-form-field>
+				</mat-grid-tile>
+			</mat-grid-list>
+			<mat-grid-list cols="1" rowHeight="60px">
+				<mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+					<div class="info_name one-line">IBAN :</div>
+					<mat-form-field style="width: 100%">
+						<input matInput [(ngModel)]="current_client['iban']" (ngModelChange)="onInputChange('iban', $event)"
+							style="text-align: center" #iban="ngModel" required style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              " />
+						<mat-error [hidden]="iban.valid">
+							IBAN-ul este obligatoriu
+						</mat-error>
+					</mat-form-field>
+				</mat-grid-tile>
+			</mat-grid-list>
+		</div>
+		<!-- Persoana Fizica -->
+		<div *ngIf="loaded && client_type == 'people'">
+			<mat-grid-list cols="1" rowHeight="60px">
+				<mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+					<div class="info_name one-line">Nume * :</div>
+					<mat-form-field style="width: 100%">
+						<input matInput [(ngModel)]="current_client['name']" (ngModelChange)="onInputChange('name', $event)"
+							style="text-align: center" #name="ngModel" required style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              " />
+						<mat-error [hidden]="name.valid">
+							Numele este obligatoriu
+						</mat-error>
+					</mat-form-field>
+				</mat-grid-tile>
+			</mat-grid-list>
+			<mat-grid-list cols="1" rowHeight="60px">
+				<mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+					<div class="info_name one-line">CNP * :</div>
+					<mat-form-field style="width: 100%">
+						<input matInput [(ngModel)]="current_client['cnp']" (ngModelChange)="onInputChange('cnp', $event)"
+							style="text-align: center" #cnp="ngModel" required style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              " />
+						<mat-error [hidden]="cnp.valid">
+							CNP-ul este obligatoriu
+						</mat-error>
+					</mat-form-field>
+				</mat-grid-tile>
+			</mat-grid-list>
+			<mat-grid-list cols="2" rowHeight="60px">
+				<mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+					<div class="info_name">Serie * :</div>
+					<mat-form-field style="width: 100%">
+						<input matInput [(ngModel)]="current_client['id_series']"
+							(ngModelChange)="onInputChange('id_series', $event)" style="text-align: center" #id_series="ngModel"
+							required style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              " />
+						<mat-error [hidden]="id_series.valid">
+							Cantitatea este obligatorie
+						</mat-error>
+					</mat-form-field>
+				</mat-grid-tile>
+				<mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+					<div class="info_name">Numarul * :</div>
+					<mat-form-field style="width: 100%">
+						<input matInput [(ngModel)]="current_client['id_number']"
+							(ngModelChange)="onInputChange('id_number', $event)" style="text-align: center" #id_number="ngModel"
+							required style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              " />
+						<mat-error [hidden]="id_number.valid">
+							Numarul este obligatoriu
+						</mat-error>
+					</mat-form-field>
+				</mat-grid-tile>
+			</mat-grid-list>
+			<mat-grid-list cols="1" rowHeight="60px">
+				<mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+					<div class="info_name one-line">Adresa * :</div>
+					<mat-form-field style="width: 100%">
+						<input matInput [(ngModel)]="current_client['address']" (ngModelChange)="onInputChange('address', $event)"
+							style="text-align: center" #address="ngModel" required style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              " />
+						<mat-error [hidden]="address.valid">
+							Adresa este obligatorie
+						</mat-error>
+					</mat-form-field>
+				</mat-grid-tile>
+			</mat-grid-list>
+			<mat-grid-list cols="1" rowHeight="60px">
+				<!-- <mat-grid-tile [colspan]="1" [rowspan]="1" class="column"> -->
+				<!-- 	<div class="info_name">Email :</div> -->
+				<!-- 	<mat-form-field style="width: 100%"> -->
+				<!-- 		<input matInput [(ngModel)]="current_client['name']" (ngModelChange)="onInputChange('name', $event)" -->
+				<!-- 			style="text-align: center" #name="ngModel" required style=" -->
+				<!--                 text-align: center; -->
+				<!--                 margin: 0; -->
+				<!--                 position: absolute; -->
+				<!--                 top: 50%; -->
+				<!--               " /> -->
+				<!-- 		<mat-error [hidden]="name.valid"> -->
+				<!-- 			Cantitatea este obligatorie -->
+				<!-- 		</mat-error> -->
+				<!-- 	</mat-form-field> -->
+				<!-- </mat-grid-tile> -->
+				<mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+					<div class="info_name one-line">Telefon :</div>
+					<mat-form-field style="width: 100%">
+						<input matInput [(ngModel)]="current_client['phone']" (ngModelChange)="onInputChange('phone', $event)"
+							style="text-align: center" #phone="ngModel" required style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              " />
+						<mat-error [hidden]="phone.valid">
+							Numarul de telefon este obligatoriu
+						</mat-error>
+					</mat-form-field>
+				</mat-grid-tile>
+			</mat-grid-list>
+			<mat-grid-list cols="1" rowHeight="60px">
+				<mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+					<div class="info_name one-line">IBAN :</div>
+					<mat-form-field style="width: 100%">
+						<input matInput [(ngModel)]="current_client['iban']" (ngModelChange)="onInputChange('iban', $event)"
+							style="text-align: center" #iban="ngModel" required style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              " />
+						<mat-error [hidden]="iban.valid">
+							IBAN-ul este obligatoriu
+						</mat-error>
+					</mat-form-field>
+				</mat-grid-tile>
+			</mat-grid-list>
+		</div>
+	</div>
+</div>
+<div mat-dialog-actions align="center">
+	<button mat-button (click)="onNoClick()">Renunta</button>
+	<button mat-button cdkFocusInitial style="float: right" (click)="isAdd ? onAdd() : onEdit()">
+		{{ isAdd ? "Adauga" : "Modifica" }}
+	</button>
+</div>

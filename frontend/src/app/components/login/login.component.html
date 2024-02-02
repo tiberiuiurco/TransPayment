@@ -1,0 +1,60 @@
+<!-- <div class="formm"> -->
+<!--   <form [formGroup]="loginForm"> -->
+<!--     <div> -->
+<!--       <mat-form-field appearance="fill"> -->
+<!--         <mat-label>Email</mat-label> -->
+<!--         <input -->
+<!--           matInput -->
+<!--           name="email" -->
+<!--           placeholder="example@elite.com" -->
+<!--           formControlName="email" -->
+<!--         /> -->
+<!--       </mat-form-field> -->
+<!--     </div> -->
+<!--     <div> -->
+<!--       <mat-form-field appearance="fill"> -->
+<!--         <mat-label>Parola</mat-label> -->
+<!--         <input -->
+<!--           matInput -->
+<!--           [type]="hide ? 'password' : 'text'" -->
+<!--           name="password" -->
+<!--           formControlName="password" -->
+<!--         /> -->
+<!--         <button -->
+<!--           mat-icon-button -->
+<!--           matSuffix -->
+<!--           (click)="hide = !hide" -->
+<!--           [attr.aria-label]="'Hide password'" -->
+<!--           [attr.aria-pressed]="hide" -->
+<!--         > -->
+<!--           <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon> -->
+<!--         </button> -->
+<!--       </mat-form-field> -->
+<!--     </div> -->
+<!--  -->
+<!--     <div class="loginButton"> -->
+<!--       <button mat-raised-button color="primary" id="loginBtn" (click)="login()"> -->
+<!--         Login -->
+<!--       </button> -->
+<!--       <div class="error"> -->
+<!--         {{ error ? error : "" }} -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </form> -->
+<!-- </div> -->
+<div class="page">
+  <div class="modal">
+    <form action="login.php" method="post" (ngSubmit)="submit()">
+      <div class="inputBox">
+        <input type="email" name="email" id="em" required="required" />
+        <span>Email</span>
+      </div>
+      <div class="inputBox">
+        <input type="password" name="password" id="pass" required="required" />
+        <span>Parola</span>
+      </div>
+      <input type="submit" value="Logare" id="but" />
+      <a href="/register">Nu aveti cont? Click pentru a crea unul!</a>
+    </form>
+  </div>
+</div>

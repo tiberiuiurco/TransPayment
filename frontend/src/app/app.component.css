@@ -1,0 +1,130 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500");
+
+.nav > li,
+a,
+button {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #edf0f1;
+  text-decoration: none;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 10%;
+  background-color: #24252a;
+  height: 5%;
+}
+
+.nav-title {
+  cursor: pointer;
+  color: #edf0f1;
+  font-family: "Space Mono", monospace;
+  font-size: 2rem;
+}
+
+.nav-links {
+  style: none;
+}
+
+.nav-links li {
+  display: inline-block;
+  padding: 0 20px;
+  list-style: none;
+}
+
+.nav-links li a {
+  transition: all 0.3s ease 0s;
+}
+
+.nav-links li a:hover {
+  color: #0088a9;
+  transition: all 0.3s ease 0s;
+}
+
+button {
+  padding: 9px 25px;
+  background-color: rgba(0, 136, 169, 1);
+  /* background: linear-gradient( */
+  /*   30deg, */
+  /*   rgb(0, 136, 169) 0%, */
+  /*   rgb(215, 223, 252) 100% */
+  /* ); */
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+button:hover {
+  background-color: rgba(0, 136, 169, 0.8);
+}
+
+.login {
+  color: white !important;
+  margin: 10px;
+}
+
+.register {
+  color: white !important;
+  margin: 10px;
+}
+
+.logged_as {
+  color: white !important;
+  margin: 10px;
+}
+
+.nav-btn {
+  color: white !important;
+  margin: 10px;
+}
+
+.content {
+  display: flex;
+  margin: 30px auto 32px;
+  padding: 0 16px;
+  max-width: 960px;
+  flex-direction: column;
+  align-items: center;
+}
+
+svg#clouds {
+  position: fixed;
+  bottom: -160px;
+  left: -230px;
+  z-index: -10;
+  width: 1920px;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 767px) {
+  .card-container > *:not(.circle-link),
+  .terminal {
+    width: 100%;
+  }
+
+  .card:not(.highlight-card) {
+    height: 16px;
+    margin: 8px 0;
+  }
+
+  .card.highlight-card span {
+    margin-left: 72px;
+  }
+
+  svg#rocket-smoke {
+    right: 120px;
+    transform: rotate(-5deg);
+  }
+}
+
+@media screen and (max-width: 575px) {
+  svg#rocket-smoke {
+    display: none;
+    visibility: hidden;
+  }
+}

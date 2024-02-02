@@ -1,0 +1,68 @@
+.modal-content {
+  overflow: hidden;
+}
+
+.error {
+  font-size: 14px;
+  font-weight: bold;
+  color: red;
+}
+
+.form_field {
+  min-width: 150px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.half_field {
+  min-width: 150px;
+  max-width: 500px;
+  width: 50%;
+}
+.half_field1 {
+  min-width: 150px;
+  max-width: 500px;
+  width: 50%;
+}
+.half_field2 {
+  min-width: 150px;
+  max-width: 500px;
+  width: 48%;
+}
+
+.dialog_card {
+  border: 2px solid #e0e0e0;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.space_half {
+  margin-right: 10px;
+}
+
+.one-liner {
+  display: flex;
+}
+
+.info_name {
+  margin-right: 10px;
+  margin-left: 10px;
+  width: 150px !important;
+}
+
+.info_name_invalid {
+  color: red;
+  margin-right: 10px;
+  margin-left: 10px;
+  width: 150px !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.lefty {
+  justify-content: left !important;
+}

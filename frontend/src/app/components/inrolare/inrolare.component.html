@@ -1,0 +1,72 @@
+<div class="header-row">
+  <div class="header-page">
+    <div class="welcome_message" *ngIf="!canEnroll">Inrolari</div>
+    <div class="welcome_message" *ngIf="canEnroll">Inroleaza-te</div>
+  </div>
+</div>
+<div class="table-view">
+  <table class="resources-table" *ngIf="!canEnroll && enrolls.length > 0">
+    <tr>
+      <th>ID</th>
+      <th>Nume</th>
+      <th>
+        Email
+      </th>
+      <th>Descriere</th>
+      <th>Actiuni</th>
+    </tr>
+    <tr
+      *ngFor="let enroll of enrolls"
+    >
+      <td class="colored_cells">{{ enroll.id }}</td>
+      <td>
+        {{
+        enroll.user.last_name + ' ' + enroll.user.first_name
+        }}
+      </td>
+      <td>{{enroll.user.email}}</td>
+      <td>{{enroll.description}}</td>
+      <td class="table-cell-center">
+        <mat-icon
+          [inline]="true"
+          class="icon filters"
+          (click)="accept(enroll.id)"
+          >check_circle</mat-icon
+        >
+      </td>
+    </tr>
+  </table>
+  <mat-paginator
+    class="paginator"
+    [length]="paginator.count"
+    [pageSize]="18"
+    (page)="receivePage($event)"
+    [pageIndex]="paginator.pageIndex"
+    *ngIf="!isLoading && canBeDone"
+  >
+  </mat-paginator>
+</div>
+
+<div
+  *ngIf="enrolls.length == 0 && !canEnroll"
+  class="company_missing space-top"
+>
+  Nu a fost gasita nicio cerere de inrolare.
+</div>
+
+
+<div *ngIf="canEnroll" class="form">
+  <div class="form_item">
+    <form action="login.php" method="post" (ngSubmit)="submit()">
+      <div class="inputBox">
+        <input type="email" name="email" id="em" required="required" />
+        <span>Email</span>
+      </div>
+      <div class="inputBox description">
+        <input type="text" name="description" id="pass" required="required" />
+        <span>Descriere Cerere</span>
+      </div>
+      <input type="submit" value="Trimite Cererea" id="but" />
+    </form>
+  </div>
+</div>

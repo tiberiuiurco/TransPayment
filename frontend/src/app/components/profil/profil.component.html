@@ -1,0 +1,272 @@
+<div class="header-page">
+  <div class="welcome_message">Profilul tau</div>
+  <div class="header-button" *ngIf="user_company && localStorage.getItem('role') == '2'">
+    <button mat-raised-button class="title-button" (click)="open_company()">
+      Modifica Compania
+    </button>
+  </div>
+</div>
+
+<div
+  [ngClass]="{
+    company_found: user_company,
+    company_missing: !user_company
+  }"
+>
+  {{
+    user_company
+      ? ""
+      : "Nu am gasit nicio companie inregistrata in contul dumneavoastra"
+  }}
+</div>
+<!-- Create a button which should call the function register_company on click -->
+<div class="register_company" *ngIf="!user_company">
+  <button mat-raised-button color="warn" (click)="open_company()">
+    Inregistreaza o Companie
+  </button>
+</div>
+<!-- <div *ngIf="user_company && user_company?.name"> -->
+<!--   <div style="margin-left: 40px"> -->
+<!--     <div> -->
+<!--       Sunteti logat ca: -->
+<!--       <a class="user-name">{{ user_information.first_name }}</a> -->
+<!--     </div> -->
+<!--     <div> -->
+<!--       Apartineti de firma: <a class="company-name">{{ user_company?.name }}</a> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
+<!--  -->
+<!-- <div class="register_company"> -->
+<!--   <button mat-raised-button color="warn" (click)="manage_resource(true)"> -->
+<!--     Adauga un angajat -->
+<!--   </button> -->
+<!-- </div> -->
+<!--  -->
+<!-- <table class="resources-table" *ngIf="company_employees.length > 0"> -->
+<!--   <tr> -->
+<!--     <th>Nume</th> -->
+<!--     <th>Telefon</th> -->
+<!--     <th>Actiuni</th> -->
+<!--   </tr> -->
+<!--   <tr *ngFor="let resource of company_employees"> -->
+<!--     <td>{{ resource.name }}</td> -->
+<!--     <td>{{ resource.phone }}</td> -->
+<!--     <td class="table-cell-center"> -->
+<!--       <mat-icon class="icon filters" (click)="manage_resource(false, resource)" -->
+<!--         >edit</mat-icon -->
+<!--       > -->
+<!--     </td> -->
+<!--   </tr> -->
+<!-- </table> -->
+<div class="body-page">
+  <div class="graphs-row" *ngIf="user_company">
+    <a class="graph">
+      <h2 class="special">Anul</h2>
+      <!-- <h2>Profit pe anul curent</h2> -->
+      <canvas
+        baseChart
+        width="400"
+        height="400"
+        [type]="'line'"
+        [data]="lineChartData1"
+        [options]="lineChartOptions1"
+        [legend]="lineChartLegend1"
+      >
+      </canvas>
+      <div class="selection">
+        <mat-form-field>
+          <mat-select
+            placeholder="Selectati Anul"
+            [(value)]="selected_year"
+            (selectionChange)="onInputChange('year', $event.value)"
+          >
+            <mat-option *ngFor="let year of years" [value]="year">
+              {{ year }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </a>
+    <a class="graph">
+      <h2 class="special">Luna</h2>
+      <!-- <h2>Profit pe anul curent</h2> -->
+      <canvas
+        baseChart
+        width="500"
+        height="400"
+        [type]="'line'"
+        [data]="lineChartData2"
+        [options]="lineChartOptions2"
+        [legend]="lineChartLegend2"
+      >
+      </canvas>
+      <mat-form-field>
+        <mat-select
+          placeholder="Selectati luna"
+          [(value)]="selected_month.id"
+          (selectionChange)="onInputChange('month', $event.value)"
+          class="selector"
+          id="selector"
+        >
+          <mat-option *ngFor="let month of months" [value]="month.id">
+            {{ month.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </a>
+    <div class="top-column">
+      <div class="top">
+        <h1 class="top-title">Top 10 Clienti Anual</h1>
+        <table class="resources-table" *ngIf="top10Clients?.length > 0">
+          <tr>
+            <th class="w500">Client</th>
+            <th>Suma</th>
+          </tr>
+          <tr *ngFor="let client of top10Clients">
+            <td class="w500">{{ client.name }}</td>
+            <td>{{ client.sum }}</td>
+          </tr>
+        </table>
+        <div class="company_missing" *ngIf="top10Clients?.length <= 0" style="margin-top: 25px">
+          Nu a fost gasita nicio comanda pe intervalul selectat.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="vat-row" *ngIf="user_company && vatSectionData">
+    <!-- <div class="vat-numbers">
+      <div class="vat-title">Date TVA (RON)</div>
+      <div class="vat-columns">
+        <div class="vat-grid-cell">
+          <div class="vat-grid-cell-title">Luna Curenta</div>
+          <div class="vat-curr-month">
+            <div class="category received">Primiti:</div>
+            <div class="value received">1235586.93</div>
+          </div>
+          <div class="vat-curr-month total-line">
+            <div class="category sent">Dati:</div>
+            <div class="value sent">677.93</div>
+          </div>
+          <div class="vat-curr-month deduced">
+            <div class="category">TVA Dedus:</div>
+            <div class="value">677.93</div>
+          </div>
+        </div>
+        <div class="vat-grid-cell var-curr-year">
+          <div class="vat-grid-cell">
+            <div class="vat-grid-cell-title">Anul Curent</div>
+            <div class="vat-curr-month">
+              <div class="category received">Primiti:</div>
+              <div class="value received">1235586.93</div>
+            </div>
+            <div class="vat-curr-month total-line">
+              <div class="category sent">Dati:</div>
+              <div class="value sent">677.93</div>
+            </div>
+            <div class="vat-curr-month deduced">
+              <div class="category">TVA Dedus:</div>
+              <div class="value">677.93</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="vat-numbers">
+      <div class="vat-title">TVA (RON)</div>
+      <div class="vat-columns">
+        <div class="vat-grid-cell">
+          <div class="vat-grid-cell-title">Luna Curenta</div>
+          <div class="vat-curr-month">
+            <div class="category received">Primiti:</div>
+            <div class="value received">
+              {{ vatSectionData.vat.month.received }}
+            </div>
+          </div>
+          <div class="vat-curr-month total-line">
+            <div class="category sent">Dati:</div>
+            <div class="value sent">{{ vatSectionData.vat.month.sent }}</div>
+          </div>
+          <div class="vat-curr-month deduced">
+            <div class="category">TVA Dedus:</div>
+            <div class="value">
+              {{ vatSectionData.vat.month.total }}
+            </div>
+          </div>
+        </div>
+        <div class="vat-grid-cell var-curr-year">
+          <div class="vat-grid-cell">
+            <div class="vat-grid-cell-title">Anul Curent</div>
+            <div class="vat-curr-month">
+              <div class="category received">Primiti:</div>
+              <div class="value received">
+                {{ vatSectionData.vat.year.received }}
+              </div>
+            </div>
+            <div class="vat-curr-month total-line">
+              <div class="category sent">Dati:</div>
+              <div class="value sent">
+                {{ vatSectionData.vat.year.sent }}
+              </div>
+            </div>
+            <div class="vat-curr-month deduced">
+              <div class="category">TVA Dedus:</div>
+              <div class="value">
+                {{ vatSectionData.vat.year.total }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vat-numbers">
+      <div class="vat-title">Sold (RON)</div>
+      <div class="vat-columns">
+        <div class="vat-grid-cell">
+          <div class="vat-grid-cell-title">Luna Curenta</div>
+          <div class="vat-curr-month">
+            <div class="category received">Venituri:</div>
+            <div class="value received">
+              {{ vatSectionData.sold.month.received }}
+            </div>
+          </div>
+          <div class="vat-curr-month total-line">
+            <div class="category sent">Cheltuieli:</div>
+            <div class="value sent">
+              {{ vatSectionData.sold.month.sent }}
+            </div>
+          </div>
+          <div class="vat-curr-month deduced">
+            <div class="category">Profit:</div>
+            <div class="value">
+              {{ vatSectionData.sold.month.total }}
+            </div>
+          </div>
+        </div>
+        <div class="vat-grid-cell var-curr-year">
+          <div class="vat-grid-cell">
+            <div class="vat-grid-cell-title">Anul Curent</div>
+            <div class="vat-curr-month">
+              <div class="category received">Venituri:</div>
+              <div class="value received">
+                {{ vatSectionData.sold.year.received }}
+              </div>
+            </div>
+            <div class="vat-curr-month total-line">
+              <div class="category sent">Cheltuieli:</div>
+              <div class="value sent">
+                {{ vatSectionData.sold.year.sent }}
+              </div>
+            </div>
+            <div class="vat-curr-month deduced">
+              <div class="category">Profit:</div>
+              <div class="value">
+                {{ vatSectionData.sold.year.total }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

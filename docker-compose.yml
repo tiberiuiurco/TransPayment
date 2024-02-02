@@ -1,0 +1,123 @@
+version: "3.9"
+
+services:
+  frontend:
+    image: frontend
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: dockerfile
+    restart: on-failure
+    depends_on:
+      - gateway
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend:/app
+
+  gateway:
+    image: gateway
+    container_name: backend-apollo-gateway
+    build:
+      context: "./backend"
+      dockerfile: dockerfile
+      args:
+        PORT: 5000
+    ports:
+      - "5000:5000"
+    depends_on:
+      - backend-companies
+      - backend-users
+      - backend-payments
+    restart: on-failure
+    environment:
+      - NODE_ENV=dev
+      - API_ENDPOINT=http://192.168.1.225
+      - PORT=5000
+      - COMPANIES_ENDPOINT=http://192.168.1.225
+      - COMPANIES_PORT=5001
+      - DB_HOST=192.168.1.225
+      - DB_PORT=3306
+      - DB_NAME=management
+      - DB_USER=root
+      - DB_PASS=licenta
+    volumes:
+      - "./backend:/app-gateway"
+
+  backend-companies:
+    image: backend-companies
+    container_name: backend-companies
+    build:
+      context: "./backend"
+      dockerfile: "./graphQL/companiesMicroservice/dockerfile"
+      args:
+        PORT: 5001
+    restart:
+      on-failure
+      #depends_on:
+      # - fluentd
+      # - redis
+    ports:
+      - "5001:5001"
+    environment:
+      - NODE_ENV=dev
+      - PORT=5001
+      - DB_HOST=localhost
+      - DB_PORT=3306
+      - DB_NAME=management
+      - DB_USER=root
+      - DB_PASS=licenta
+    volumes:
+      - "./backend:/companies-microservice"
+
+  backend-users:
+    image: backend-users
+    container_name: backend-users
+    build:
+      context: "./backend"
+      dockerfile: "./graphQL/usersMicroservice/dockerfile"
+      args:
+        PORT: 5002
+    restart:
+      on-failure
+      #depends_on:
+      # - fluentd
+      # - redis
+    ports:
+      - "5002:5002"
+    environment:
+      - NODE_ENV=dev
+      - PORT=5002
+      - DB_HOST=localhost
+      - DB_PORT=3306
+      - DB_NAME=management
+      - DB_USER=root
+      - DB_PASS=licenta
+    volumes:
+      - "./backend:/users-microservice"
+
+  backend-payments:
+    image: backend-payments
+    container_name: backend-payments
+    build:
+      context: "./backend"
+      dockerfile: "./graphQL/paymentsMicroservice/dockerfile"
+      args:
+        PORT: 5003
+    restart:
+      on-failure
+      #depends_on:
+      # - fluentd
+      # - redis
+    ports:
+      - "5003:5003"
+    environment:
+      - NODE_ENV=dev
+      - PORT=5003
+      - DB_HOST=localhost
+      - DB_PORT=3306
+      - DB_NAME=management
+      - DB_USER=root
+      - DB_PASS=licenta
+    volumes:
+      - "./backend:/payments-microservice"

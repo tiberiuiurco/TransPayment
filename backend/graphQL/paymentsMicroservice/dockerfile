@@ -1,0 +1,13 @@
+FROM node:12
+RUN mkdir -p /payments-microservice/
+WORKDIR /payments-microservice
+COPY graphQL/paymentsMicroservice/package*.json /payments-microservice/
+RUN npm install
+COPY graphQL/paymentsMicroservice/ /payments-microservice/graphQL/paymentsMicroservice
+COPY db/ /payments-microservice/db
+COPY models/ /payments-microservice/models
+
+ARG PORT
+EXPOSE ${PORT}
+
+CMD ["npm", "run", "start-payments"]

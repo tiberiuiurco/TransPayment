@@ -1,0 +1,13 @@
+FROM node:12
+RUN mkdir -p /companies-microservice/
+WORKDIR /companies-microservice
+COPY graphQL/companiesMicroservice/package*.json /companies-microservice/
+RUN npm install
+COPY graphQL/companiesMicroservice/ /companies-microservice/graphQL/companiesMicroservice
+COPY db/ /companies-microservice/db
+COPY models/ /companies-microservice/models
+
+ARG PORT
+EXPOSE ${PORT}
+
+CMD ["npm", "run", "start-company"]

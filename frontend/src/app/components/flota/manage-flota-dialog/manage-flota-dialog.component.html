@@ -1,0 +1,66 @@
+<!-- Add style that aligns the title in the middle. -->
+<h1 mat-dialog-title align="center">
+	{{ isAdd ? "Adauga un vehicul:" : "Modifica vehiculul:" }}
+</h1>
+<div class="dialog_card">
+	<div mat-dialog-content class="modal-content">
+		<div *ngIf="loaded && client_type == 'companies'">
+			<mat-grid-list cols="2" rowHeight="60px">
+				<mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+					<div class="info_name">Nr-Inm: * :</div>
+					<mat-form-field style="width: 100%">
+						<input matInput [(ngModel)]="current_client['car_plate']" (ngModelChange)="onInputChange('car_plate', $event)"
+							style="text-align: center" #car_plate="ngModel" required style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              " />
+						<mat-error [hidden]="car_plate.valid">
+							Numarul de inmatriculare este obligatoriu
+						</mat-error>
+					</mat-form-field>
+				</mat-grid-tile>
+				<mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+					<div class="info_name">Tip * :</div>
+          <mat-form-field>
+            <mat-select
+              [(ngModel)]="current_client['tip']"
+              style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              "
+              (ngModelChange)="onInputChange('tip', $event)"
+              #tip="ngModel"
+              required
+            >
+              <mat-option>
+                <ngx-mat-select-search
+                  [(ngModel)]="search"
+                  [placeholderLabel]="'Search'"
+                  [noEntriesFoundLabel]="'No value found'"
+                  (ngModelChange)="onSearch('tip', $event)"
+                >
+                </ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let type of types" [value]="type">
+                <span>{{ type }}</span>
+              </mat-option>
+            </mat-select>
+            <mat-error [hidden]="tip.valid">
+              Introducerea tipului este obligatorie
+            </mat-error>
+          </mat-form-field>
+				</mat-grid-tile>
+			</mat-grid-list>
+		</div>
+	</div>
+</div>
+<div mat-dialog-actions align="center">
+	<button mat-button (click)="onNoClick()">Renunta</button>
+	<button mat-button cdkFocusInitial style="float: right" (click)="isAdd ? onAdd() : onEdit()">
+		{{ isAdd ? "Adauga" : "Modifica" }}
+	</button>
+</div>

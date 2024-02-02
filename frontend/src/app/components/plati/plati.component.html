@@ -1,0 +1,130 @@
+<div class="header-row">
+  <div class="header-page">
+    <div class="welcome_message">Intrari</div>
+    <div class="header-button" *ngIf="user_company">
+      <button
+        mat-raised-button
+        class="title-button"
+        (click)="manage_payment(true)"
+      >
+        Adauga
+      </button>
+    </div>
+  </div>
+
+  <div class="chip-list">
+    <mat-chip-listbox
+      aria-label="Fish selection"
+    >
+      <mat-chip-option
+        selected
+        (click)="getMonthIntervalInputPaymentsPagination(1)"
+        >Luna Curenta</mat-chip-option
+      >
+      <mat-chip-option (click)="getMonthIntervalInputPaymentsPagination(2)"
+        >Ultimele 2 Luni</mat-chip-option
+      >
+      <mat-chip-option
+        class="current-year"
+        (click)="getMonthIntervalInputPaymentsPagination(-1)"
+        >Anul Curent</mat-chip-option
+      >
+      <!-- <mat-chip-option color="warn">Warn fish</mat-chip-option> -->
+    </mat-chip-listbox>
+  </div>
+</div>
+<mat-spinner
+  style="margin-left: 40px; margin-top: 40px"
+  *ngIf="isLoading"
+></mat-spinner>
+<div class="table-view">
+  <table class="resources-table" *ngIf="inputPayments.length > 0">
+    <tr>
+      <th>ID</th>
+      <th>Client</th>
+      <th style="cursor: pointer" (click)="changeReceiptDateSort()">
+        Data Factura
+      </th>
+      <th>Data Scadenta</th>
+      <th>Delegat</th>
+      <th style="cursor: pointer" (click)="changeValueSort()">Valoare</th>
+      <th>Tva</th>
+      <th>Actiuni</th>
+    </tr>
+    <tr
+      *ngFor="let payment of inputPayments"
+      [ngClass]="{ resources_table_unpaid: !payment.paid }"
+    >
+      <td class="colored_cells">{{ payment.id }}</td>
+      <td>
+        {{
+          payment.isPartnerCompany
+            ? payment.partner_company.name
+            : payment.partner_person.name
+        }}
+      </td>
+      <td>{{ payment.receipt_date }}</td>
+      <td>{{ payment.payment_date }}</td>
+      <td>{{ payment.delegate.name }}</td>
+      <td>{{ payment.price_for_amount }}</td>
+      <td>{{ payment.vat_value }}</td>
+      <td class="table-cell-center">
+        <mat-icon
+          [inline]="true"
+          class="icon filters"
+          (click)="mark_paid(payment)"
+          *ngIf="!payment.paid"
+          matTooltip="Please use dot (.) for decimals separation."
+          >check_circle</mat-icon
+        >
+        <mat-icon
+          [inline]="true"
+          style="margin: 0 10px"
+          class="icon filters"
+          (click)="manage_payment(false, payment)"
+          >edit</mat-icon
+        >
+        <mat-icon
+          [inline]="true"
+          style="margin: 0 10px 0 0"
+          class="icon filters"
+          (click)="generateInvoicePerPayment(payment, 'view')"
+          >visibility</mat-icon
+        >
+        <mat-icon
+          [inline]="true"
+          class="icon filters"
+          (click)="generateInvoicePerPayment(payment, 'download')"
+          matTooltip="Please use dot (.) for decimals separation."
+          >cloud_download</mat-icon
+        >
+      </td>
+    </tr>
+  </table>
+  <mat-paginator
+    class="paginator"
+    [length]="paginator.count"
+    [pageSize]="18"
+    (page)="receivePage($event)"
+    [pageIndex]="paginator.pageIndex"
+    *ngIf="!isLoading && canBeDone"
+  >
+  </mat-paginator>
+</div>
+
+<div
+  [ngClass]="{
+    company_found: user_company,
+    company_missing: !user_company
+  }"
+>
+  {{
+    user_company
+      ? ""
+      : "Nu am gasit nicio companie inregistrata in contul dumneavoastra"
+  }}
+</div>
+
+<div class="company_missing" *ngIf="inputPayments.length == 0">
+  Nu exista nicio iesire inregistrata.
+</div>

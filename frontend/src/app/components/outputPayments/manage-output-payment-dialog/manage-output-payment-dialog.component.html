@@ -1,0 +1,130 @@
+<!-- Add style that aligns the title in the middle. -->
+<h1 mat-dialog-title align="center">
+  {{ isAdd ? "Adauga o Iesire:" : "Modifica Iesirea:" }}
+</h1>
+<div class="dialog_card">
+  <div mat-dialog-content class="modal-content">
+    <div *ngIf="loaded">
+      <mat-grid-list cols="2" rowHeight="60px">
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+          <div class="align-left">
+            <div
+              [ngClass]="{
+                info_name_invalid: payment_date.invalid,
+                info_name: !payment_date.invalid
+              }"
+            >
+              Data Plata * :
+            </div>
+          </div>
+          <mat-form-field class="datepicker">
+            <input
+              matInput
+              [matDatepicker]="pickerReceipt"
+              [formControl]="payment_date"
+              (dateChange)="onInputChange('payment_date', $event)"
+              style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              "
+              required
+            />
+            <mat-datepicker-toggle matSuffix [for]="pickerReceipt">
+            </mat-datepicker-toggle>
+            <mat-datepicker #pickerReceipt> </mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+          <div class="info_name">Serie/Numar</div>
+          <mat-form-field style="width: 100%">
+            <input
+              matInput
+              [(ngModel)]="current_payment['series_number']"
+              (ngModelChange)="onInputChange('series_number', $event)"
+              style="text-align: center"
+              #series_number="ngModel"
+              required
+              style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              "
+            />
+            <mat-error [hidden]="series_number.valid">
+              Seria si numarul sunt obligatorii
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <mat-grid-list cols="2" rowHeight="60px">
+        <mat-grid-tile [colspan]="2" [rowspan]="1" class="column">
+          <div class="info_name">Companie * :</div>
+          <mat-form-field style="width: 100%">
+            <input
+              matInput
+              [(ngModel)]="current_payment['name']"
+              (ngModelChange)="onInputChange('name', $event)"
+              style="text-align: center"
+              #name="ngModel"
+              required
+              style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              "
+            />
+            <mat-error [hidden]="name.valid">
+              Numele companiei este obligatorie
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-grid-list cols="2" rowHeight="60px">
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column">
+          <div class="info_name">Suma * :</div>
+          <mat-form-field>
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="current_payment['total']"
+              (ngModelChange)="onInputChange('total', $event)"
+              style="text-align: center"
+              #total="ngModel"
+              required
+              style="
+                text-align: center;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+              "
+            />
+            <mat-error [hidden]="total.valid">
+              Suma este obligatorie
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="column lefty">
+          <div class="" style="text-align: left">
+            TVA: {{ current_payment["vat_value"] }}
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="center">
+  <button mat-button (click)="onNoClick()">Renunta</button>
+  <button
+    mat-button
+    cdkFocusInitial
+    style="float: right"
+    (click)="isAdd ? registerResource() : updateInputPayment()"
+  >
+    {{ isAdd ? "Adauga" : "Modifica" }}
+  </button>
+</div>
